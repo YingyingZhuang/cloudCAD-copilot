@@ -1,0 +1,483 @@
+{
+  "rootAssembly" : {
+    "occurrences" : [ {
+      "transform" : [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ],
+      "fixed" : false,
+      "hidden" : false,
+      "path" : [ "M6rP+4SzQw6SO6s3R" ]
+    }, {
+      "transform" : [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ],
+      "fixed" : false,
+      "hidden" : false,
+      "path" : [ "MEZD51y6mWzGJiLxQ" ]
+    }, {
+      "transform" : [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ],
+      "fixed" : true,
+      "hidden" : false,
+      "path" : [ "MGr+/VmsqAx2CYFgL" ]
+    }, {
+      "transform" : [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ],
+      "fixed" : false,
+      "hidden" : false,
+      "path" : [ "MKAv+3nk6aIJh8U9L" ]
+    }, {
+      "transform" : [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ],
+      "fixed" : false,
+      "hidden" : false,
+      "path" : [ "MQiRfqMFaTyaqVIFa" ]
+    }, {
+      "transform" : [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ],
+      "fixed" : false,
+      "hidden" : false,
+      "path" : [ "MSWe5Z+x5EIPKGMIZ" ]
+    }, {
+      "transform" : [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ],
+      "fixed" : false,
+      "hidden" : false,
+      "path" : [ "MSYG21iie+ZKFFcmR" ]
+    }, {
+      "transform" : [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ],
+      "fixed" : false,
+      "hidden" : false,
+      "path" : [ "MUIMLlFwSHEtf3j7J" ]
+    }, {
+      "transform" : [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ],
+      "fixed" : false,
+      "hidden" : false,
+      "path" : [ "MV729IGbRgTpBnjkc" ]
+    }, {
+      "transform" : [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ],
+      "fixed" : false,
+      "hidden" : false,
+      "path" : [ "MZGkjIrD2GlNvFAre" ]
+    }, {
+      "transform" : [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ],
+      "fixed" : false,
+      "hidden" : false,
+      "path" : [ "MbVRT1QrBVpEnXcS+" ]
+    }, {
+      "transform" : [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ],
+      "fixed" : false,
+      "hidden" : false,
+      "path" : [ "MfK18HQ82SzoCEmy5" ]
+    }, {
+      "transform" : [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ],
+      "fixed" : false,
+      "hidden" : false,
+      "path" : [ "MhcGUw5Jx53UnU/Uo" ]
+    }, {
+      "transform" : [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ],
+      "fixed" : false,
+      "hidden" : false,
+      "path" : [ "MlC/A6cUHPSv8bHzZ" ]
+    }, {
+      "transform" : [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ],
+      "fixed" : false,
+      "hidden" : false,
+      "path" : [ "Mnk30pKBCvLkHYoJU" ]
+    }, {
+      "transform" : [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ],
+      "fixed" : false,
+      "hidden" : false,
+      "path" : [ "Mr+naea/kV87Atvrh" ]
+    }, {
+      "transform" : [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ],
+      "fixed" : false,
+      "hidden" : false,
+      "path" : [ "MrYEN6u++pnGIdPWY" ]
+    }, {
+      "transform" : [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ],
+      "fixed" : false,
+      "hidden" : false,
+      "path" : [ "Mz4npt/YD2RiHDZTA" ]
+    } ],
+    "patterns" : [ ],
+    "instances" : [ {
+      "isStandardContent" : false,
+      "type" : "Part",
+      "id" : "Mr+naea/kV87Atvrh",
+      "name" : "01 - Top Die Shoe <1>",
+      "suppressed" : false,
+      "partId" : "JND",
+      "fullConfiguration" : "default",
+      "configuration" : "default",
+      "documentId" : "f50e28300b77e78d0c047b45",
+      "elementId" : "8b2be211d08ae2a28cf4a353",
+      "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+    }, {
+      "isStandardContent" : false,
+      "type" : "Part",
+      "id" : "MV729IGbRgTpBnjkc",
+      "name" : "02 - Punch Backing Plate <1>",
+      "suppressed" : false,
+      "partId" : "JMD",
+      "fullConfiguration" : "default",
+      "configuration" : "default",
+      "documentId" : "f50e28300b77e78d0c047b45",
+      "elementId" : "8b2be211d08ae2a28cf4a353",
+      "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+    }, {
+      "isStandardContent" : false,
+      "type" : "Part",
+      "id" : "Mz4npt/YD2RiHDZTA",
+      "name" : "05 - Piercing Punches-1 <1>",
+      "suppressed" : false,
+      "partId" : "JSD",
+      "fullConfiguration" : "default",
+      "configuration" : "default",
+      "documentId" : "f50e28300b77e78d0c047b45",
+      "elementId" : "8b2be211d08ae2a28cf4a353",
+      "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+    }, {
+      "isStandardContent" : false,
+      "type" : "Part",
+      "id" : "MZGkjIrD2GlNvFAre",
+      "name" : "05 - Piercing Punches-2 <1>",
+      "suppressed" : false,
+      "partId" : "JSH",
+      "fullConfiguration" : "default",
+      "configuration" : "default",
+      "documentId" : "f50e28300b77e78d0c047b45",
+      "elementId" : "8b2be211d08ae2a28cf4a353",
+      "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+    }, {
+      "isStandardContent" : false,
+      "type" : "Part",
+      "id" : "MUIMLlFwSHEtf3j7J",
+      "name" : "05 - Piercing Punches-3 <1>",
+      "suppressed" : false,
+      "partId" : "JSL",
+      "fullConfiguration" : "default",
+      "configuration" : "default",
+      "documentId" : "f50e28300b77e78d0c047b45",
+      "elementId" : "8b2be211d08ae2a28cf4a353",
+      "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+    }, {
+      "isStandardContent" : false,
+      "type" : "Part",
+      "id" : "M6rP+4SzQw6SO6s3R",
+      "name" : "08 - Punch Holder <1>",
+      "suppressed" : false,
+      "partId" : "JLD",
+      "fullConfiguration" : "default",
+      "configuration" : "default",
+      "documentId" : "f50e28300b77e78d0c047b45",
+      "elementId" : "8b2be211d08ae2a28cf4a353",
+      "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+    }, {
+      "isStandardContent" : false,
+      "type" : "Part",
+      "id" : "MGr+/VmsqAx2CYFgL",
+      "name" : "14 - Bottom Die Shoe <1>",
+      "suppressed" : false,
+      "partId" : "JJD",
+      "fullConfiguration" : "default",
+      "configuration" : "default",
+      "documentId" : "f50e28300b77e78d0c047b45",
+      "elementId" : "8b2be211d08ae2a28cf4a353",
+      "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+    }, {
+      "isStandardContent" : false,
+      "type" : "Part",
+      "id" : "MlC/A6cUHPSv8bHzZ",
+      "name" : "16 - Die Backing Plate <1>",
+      "suppressed" : false,
+      "partId" : "JID",
+      "fullConfiguration" : "default",
+      "configuration" : "default",
+      "documentId" : "f50e28300b77e78d0c047b45",
+      "elementId" : "8b2be211d08ae2a28cf4a353",
+      "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+    }, {
+      "isStandardContent" : false,
+      "type" : "Part",
+      "id" : "MrYEN6u++pnGIdPWY",
+      "name" : "18 - Die Block <1>",
+      "suppressed" : false,
+      "partId" : "JHD",
+      "fullConfiguration" : "default",
+      "configuration" : "default",
+      "documentId" : "f50e28300b77e78d0c047b45",
+      "elementId" : "8b2be211d08ae2a28cf4a353",
+      "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+    }, {
+      "isStandardContent" : false,
+      "type" : "Part",
+      "id" : "Mnk30pKBCvLkHYoJU",
+      "name" : "20 - Stripper Plate <1>",
+      "suppressed" : false,
+      "partId" : "JhD",
+      "fullConfiguration" : "default",
+      "configuration" : "default",
+      "documentId" : "f50e28300b77e78d0c047b45",
+      "elementId" : "8b2be211d08ae2a28cf4a353",
+      "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+    }, {
+      "isStandardContent" : false,
+      "type" : "Part",
+      "id" : "MSYG21iie+ZKFFcmR",
+      "name" : "20 - Stripper Plate <2>",
+      "suppressed" : false,
+      "partId" : "JhH",
+      "fullConfiguration" : "default",
+      "configuration" : "default",
+      "documentId" : "f50e28300b77e78d0c047b45",
+      "elementId" : "8b2be211d08ae2a28cf4a353",
+      "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+    }, {
+      "isStandardContent" : false,
+      "type" : "Part",
+      "id" : "MEZD51y6mWzGJiLxQ",
+      "name" : "20 - Stripper Plate <3>",
+      "suppressed" : false,
+      "partId" : "JhL",
+      "fullConfiguration" : "default",
+      "configuration" : "default",
+      "documentId" : "f50e28300b77e78d0c047b45",
+      "elementId" : "8b2be211d08ae2a28cf4a353",
+      "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+    }, {
+      "isStandardContent" : false,
+      "type" : "Part",
+      "id" : "MSWe5Z+x5EIPKGMIZ",
+      "name" : "20 - Stripper Plate <4>",
+      "suppressed" : false,
+      "partId" : "JhP",
+      "fullConfiguration" : "default",
+      "configuration" : "default",
+      "documentId" : "f50e28300b77e78d0c047b45",
+      "elementId" : "8b2be211d08ae2a28cf4a353",
+      "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+    }, {
+      "isStandardContent" : false,
+      "type" : "Part",
+      "id" : "MKAv+3nk6aIJh8U9L",
+      "name" : "20 - Stripper Plate <5>",
+      "suppressed" : false,
+      "partId" : "JhT",
+      "fullConfiguration" : "default",
+      "configuration" : "default",
+      "documentId" : "f50e28300b77e78d0c047b45",
+      "elementId" : "8b2be211d08ae2a28cf4a353",
+      "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+    }, {
+      "isStandardContent" : false,
+      "type" : "Part",
+      "id" : "MhcGUw5Jx53UnU/Uo",
+      "name" : "4 - Corner Cutters-1 <1>",
+      "suppressed" : false,
+      "partId" : "JZD",
+      "fullConfiguration" : "default",
+      "configuration" : "default",
+      "documentId" : "f50e28300b77e78d0c047b45",
+      "elementId" : "8b2be211d08ae2a28cf4a353",
+      "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+    }, {
+      "isStandardContent" : false,
+      "type" : "Part",
+      "id" : "MfK18HQ82SzoCEmy5",
+      "name" : "4 - Corner Cutters-2 <1>",
+      "suppressed" : false,
+      "partId" : "JfD",
+      "fullConfiguration" : "default",
+      "configuration" : "default",
+      "documentId" : "f50e28300b77e78d0c047b45",
+      "elementId" : "8b2be211d08ae2a28cf4a353",
+      "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+    }, {
+      "isStandardContent" : false,
+      "type" : "Part",
+      "id" : "MbVRT1QrBVpEnXcS+",
+      "name" : "4 - Corner Cutters-3 <1>",
+      "suppressed" : false,
+      "partId" : "JgD",
+      "fullConfiguration" : "default",
+      "configuration" : "default",
+      "documentId" : "f50e28300b77e78d0c047b45",
+      "elementId" : "8b2be211d08ae2a28cf4a353",
+      "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+    }, {
+      "isStandardContent" : false,
+      "type" : "Part",
+      "id" : "MQiRfqMFaTyaqVIFa",
+      "name" : "4 - Corner Cutters-4 <1>",
+      "suppressed" : false,
+      "partId" : "JgH",
+      "fullConfiguration" : "default",
+      "configuration" : "default",
+      "documentId" : "f50e28300b77e78d0c047b45",
+      "elementId" : "8b2be211d08ae2a28cf4a353",
+      "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+    } ],
+    "fullConfiguration" : "default",
+    "configuration" : "default",
+    "documentId" : "f50e28300b77e78d0c047b45",
+    "elementId" : "c2048ce402c48fc44e04369a",
+    "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+  },
+  "subAssemblies" : [ ],
+  "parts" : [ {
+    "isStandardContent" : false,
+    "partId" : "JMD",
+    "bodyType" : "solid",
+    "fullConfiguration" : "default",
+    "configuration" : "default",
+    "documentId" : "f50e28300b77e78d0c047b45",
+    "elementId" : "8b2be211d08ae2a28cf4a353",
+    "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+  }, {
+    "isStandardContent" : false,
+    "partId" : "JND",
+    "bodyType" : "solid",
+    "fullConfiguration" : "default",
+    "configuration" : "default",
+    "documentId" : "f50e28300b77e78d0c047b45",
+    "elementId" : "8b2be211d08ae2a28cf4a353",
+    "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+  }, {
+    "isStandardContent" : false,
+    "partId" : "JSL",
+    "bodyType" : "solid",
+    "fullConfiguration" : "default",
+    "configuration" : "default",
+    "documentId" : "f50e28300b77e78d0c047b45",
+    "elementId" : "8b2be211d08ae2a28cf4a353",
+    "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+  }, {
+    "isStandardContent" : false,
+    "partId" : "JLD",
+    "bodyType" : "solid",
+    "fullConfiguration" : "default",
+    "configuration" : "default",
+    "documentId" : "f50e28300b77e78d0c047b45",
+    "elementId" : "8b2be211d08ae2a28cf4a353",
+    "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+  }, {
+    "isStandardContent" : false,
+    "partId" : "JID",
+    "bodyType" : "solid",
+    "fullConfiguration" : "default",
+    "configuration" : "default",
+    "documentId" : "f50e28300b77e78d0c047b45",
+    "elementId" : "8b2be211d08ae2a28cf4a353",
+    "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+  }, {
+    "isStandardContent" : false,
+    "partId" : "JJD",
+    "bodyType" : "solid",
+    "fullConfiguration" : "default",
+    "configuration" : "default",
+    "documentId" : "f50e28300b77e78d0c047b45",
+    "elementId" : "8b2be211d08ae2a28cf4a353",
+    "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+  }, {
+    "isStandardContent" : false,
+    "partId" : "JgD",
+    "bodyType" : "solid",
+    "fullConfiguration" : "default",
+    "configuration" : "default",
+    "documentId" : "f50e28300b77e78d0c047b45",
+    "elementId" : "8b2be211d08ae2a28cf4a353",
+    "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+  }, {
+    "isStandardContent" : false,
+    "partId" : "JHD",
+    "bodyType" : "solid",
+    "fullConfiguration" : "default",
+    "configuration" : "default",
+    "documentId" : "f50e28300b77e78d0c047b45",
+    "elementId" : "8b2be211d08ae2a28cf4a353",
+    "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+  }, {
+    "isStandardContent" : false,
+    "partId" : "JhD",
+    "bodyType" : "solid",
+    "fullConfiguration" : "default",
+    "configuration" : "default",
+    "documentId" : "f50e28300b77e78d0c047b45",
+    "elementId" : "8b2be211d08ae2a28cf4a353",
+    "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+  }, {
+    "isStandardContent" : false,
+    "partId" : "JfD",
+    "bodyType" : "solid",
+    "fullConfiguration" : "default",
+    "configuration" : "default",
+    "documentId" : "f50e28300b77e78d0c047b45",
+    "elementId" : "8b2be211d08ae2a28cf4a353",
+    "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+  }, {
+    "isStandardContent" : false,
+    "partId" : "JgH",
+    "bodyType" : "solid",
+    "fullConfiguration" : "default",
+    "configuration" : "default",
+    "documentId" : "f50e28300b77e78d0c047b45",
+    "elementId" : "8b2be211d08ae2a28cf4a353",
+    "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+  }, {
+    "isStandardContent" : false,
+    "partId" : "JhH",
+    "bodyType" : "solid",
+    "fullConfiguration" : "default",
+    "configuration" : "default",
+    "documentId" : "f50e28300b77e78d0c047b45",
+    "elementId" : "8b2be211d08ae2a28cf4a353",
+    "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+  }, {
+    "isStandardContent" : false,
+    "partId" : "JhL",
+    "bodyType" : "solid",
+    "fullConfiguration" : "default",
+    "configuration" : "default",
+    "documentId" : "f50e28300b77e78d0c047b45",
+    "elementId" : "8b2be211d08ae2a28cf4a353",
+    "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+  }, {
+    "isStandardContent" : false,
+    "partId" : "JhP",
+    "bodyType" : "solid",
+    "fullConfiguration" : "default",
+    "configuration" : "default",
+    "documentId" : "f50e28300b77e78d0c047b45",
+    "elementId" : "8b2be211d08ae2a28cf4a353",
+    "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+  }, {
+    "isStandardContent" : false,
+    "partId" : "JZD",
+    "bodyType" : "solid",
+    "fullConfiguration" : "default",
+    "configuration" : "default",
+    "documentId" : "f50e28300b77e78d0c047b45",
+    "elementId" : "8b2be211d08ae2a28cf4a353",
+    "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+  }, {
+    "isStandardContent" : false,
+    "partId" : "JhT",
+    "bodyType" : "solid",
+    "fullConfiguration" : "default",
+    "configuration" : "default",
+    "documentId" : "f50e28300b77e78d0c047b45",
+    "elementId" : "8b2be211d08ae2a28cf4a353",
+    "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+  }, {
+    "isStandardContent" : false,
+    "partId" : "JSD",
+    "bodyType" : "solid",
+    "fullConfiguration" : "default",
+    "configuration" : "default",
+    "documentId" : "f50e28300b77e78d0c047b45",
+    "elementId" : "8b2be211d08ae2a28cf4a353",
+    "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+  }, {
+    "isStandardContent" : false,
+    "partId" : "JSH",
+    "bodyType" : "solid",
+    "fullConfiguration" : "default",
+    "configuration" : "default",
+    "documentId" : "f50e28300b77e78d0c047b45",
+    "elementId" : "8b2be211d08ae2a28cf4a353",
+    "documentMicroversion" : "98b5972a48ad8bbc85509e37"
+  } ],
+  "partStudioFeatures" : [ ]
+}
