@@ -27,14 +27,19 @@ This engineering judgment assistant goes beyond simple commands. It understands:
 ## Progress Log
 
 ### Phase 2: Geometric Analysis Kernel 
-**Objective:** Enable Onshape to "see" and measure features natively.
-- Developed a custom **FeatureScript** to analyze B-Rep topology.
-- Implemented `evSurfaceDefinition` to distinguish cylindrical holes from other geometries.
-- Achieved **Unit Awareness**: Automatically converts internal meters to millimeters for engineering use.
-- **Result:** Successfully detected 10+ holes and calculated precise diameters (8mm/9mm) from a raw die shoe model.
+**Objective:** Enable Onshape to "see" and measure hole features natively then give the recommandation based on standards.
 
-![FeatureScript Demo](assets/day2_featurescript_demo.png)
-*Figure: Custom FeatureScript successfully identifying hole diameters in real-time.*
+**Iteration 1: Basic Detection**
+- Implemented B-Rep analysis to identify cylindrical topology.
+- Achieved unit conversion awareness.
+
+**Iteration 2: Edge-Side Inference (Current Version)**
+- **Rule-Based RAG:** Embedded engineering logic directly into FeatureScript to map geometry to ISO standards.
+- **Classification Engine:** Automatically categorizes features into "Dowel Pins" (<8.5mm) vs. "Screw Clearance" (>8.5mm).
+- **Auto Calculating:** dynamic calculation of part lengths based on plate thickness (e.g., `Pin Length = Plate Thickness + 5mm`).
+
+![AI Logic Demo](assets/day2_featurescript_improvement.png)
+*Figure: FeatureScript performing real-time inference, recommending ISO 8734 pins and ISO 4762 screws based on hole dimensions.*
 
 📂 **Code:** [detectHoles.fs](featurescript/detectHoles.fs)
 
