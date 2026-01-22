@@ -26,6 +26,19 @@ This engineering judgment assistant goes beyond simple commands. It understands:
 
 ## Progress Log
 
+### Phase 3: Intelligent Backend & RAG Architecture
+**Objective:** Build a Python microservice to act as the "Brain" to simulate Vector Database retrieval.
+
+- **FastAPI Microservice:** Deployed a local REST API using `FastAPI` and `Uvicorn`.
+- **RAG Simulation:** Implemented a mock Vector DB to retrieve engineering context (Embeddings + Text chunks) based on geometric inputs.
+- **Protocol Compliance:** Designed endpoints to simulate **MCP**, enabling standardized context injection for LLMs.
+- **Security:** Configured CORS middleware to securely allow requests from `cad.onshape.com`.
+
+![Backend RAG Response](assets/day3_backend_mcp.png)
+*Figure: The Backend API returning context-aware data (Simulated Embeddings & ISO Standards) in JSON format.*
+
+📂 **Code:** [backend/main.py](backend/main.py)
+
 ### Phase 2: Geometric Analysis Kernel 
 **Objective:** Enable Onshape to "see" and measure hole features natively then give the recommandation based on standards.
 
