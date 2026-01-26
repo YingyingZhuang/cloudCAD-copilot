@@ -1,6 +1,7 @@
-from fastapi import FastAPI,HTTPException
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-import random #used to generate embedding vectors
+from collections import Counter
+from onshape_client import OnshapeClient
 
 app = FastAPI()
 # Set up CORS middleware to allow requests from Onshape (https://cad.onshape.com) to access this computer(localhost).
@@ -37,48 +38,73 @@ cloud_database = {
         "link": "https://www.mcmaster.com/screws/thread-size~m8/"
     }
     }
+client = OnshapeClient()
 @app.get("/")
 def read_root():
     return {"status": "CAD Copilot is ready online!"
 }
 
-@app.get("/mcp/context")
-def get_mcp_context(diameter: float):
-    key = str(round(diameter,1))
+@app.get("/auto-recommend")
+def auto_recommend(did: str, wid: str, eid: str, instruction: str = ""):
+    """
+    Eample: User input: "Insert pin for Top Die Shoe"
+    """
+    print(f" Analyzing Document: {did}")
+    print(f"User Instruction: {instruction}")
+
+    # 1. Get a Part name with format: [{"part_name": "Top Die Shoe", "diameter": 8.0}, ...]
+    raw_data = client.analyze_geometry(did, wid, eid)
+    
+    if not raw_data:
+        return {"found": False, "message": "No geometry detected."}
+
+    # 2. Semantic Filtering
+    target_part_name = None
+    filtered_diameters = []
+
+    #Simple keyword matching logic (MVP)
+    # It shoud use LLM extraction here, but for now we use simple string matching
+    known_parts = set([item['part_name'] for item in raw_data])
+    
+    # check part name
+    for part in known_parts:
+        if part.lower() in instruction.lower():
+            target_part_name = part
+            break
+    
+    if target_part_name:
+        print(f"Target Part Identified: {target_part_name}")
+        # only keep the part's hole
+        filtered_diameters = [d['diameter'] for d in raw_data if d['part_name'] == target_part_name]
+    else:
+        print("No specific part identified in instruction, scanning all.")
+        # If the part name is not mentioned, then a full scan (Fallback) will be carried out.
+        filtered_diameters = [d['diameter'] for d in raw_data]
+
+    if not filtered_diameters:
+        return {"found": False, "message": f"Part '{target_part_name}' found, but it has no holes."}
+
+    # 3. Statistics & Recommendations
+    most_common_dia = Counter(filtered_diameters).most_common(1)[0][0]
+    print(f"Most common diameter on target: {most_common_dia}mm")
+    
+    key = str(round(most_common_dia, 1))
     item = cloud_database.get(key)
+    
     if item:
-        return{
-            "mcp_version": "1.0",
-            "resource_type": "engineering_standard",
-            "content": {
-                "text": item["rag_context"],
-                "embedding_preview": item["embedding"]
+        thickness = 35.0
+        rec_length = thickness + 5 if "Pin" in item['type'] else round(thickness * 0.7)
+        return {
+            "found": True,
+            "target_part": target_part_name if target_part_name else "All Parts",
+            "detected_holes": len(filtered_diameters),
+            "most_common_diameter": most_common_dia,
+            "recommendation": {
+                "part_name": f"{item['standard']} - {item['type']}",
+                "spec": f"Size: {key}mm x {int(rec_length)}mm",
+                "reasoning": f"Detected {most_common_dia}mm holes on {target_part_name or 'model'}.",
+                "purchase_link": item['link']
             }
         }
     else:
-        return {"mcp_version": "1.0", "content": None}
-#Core reason: Inserting standard parts
-@app.get("/recommend")
-def recommend(diameter: float, thinkness: float = 35.0):
-    key = str(round(diameter,1))
-    item = cloud_database.get(key)
-    if item:
-        if "Pin" in item["type"]:
-           rec_length = thinkness + 5
-        else:
-           rec_length = round(thinkness*0.7)
-        
-        return {
-            "found": True,
-            "part_name": f"{item['standard']} - {item['type']}",
-            "spec": f"Size: {key}mm x {int(rec_length)}mm",
-            "material": item['material'],
-            "reasoning": item['description'],
-            "context_source": "Vector DB (Simulated)", # 强调数据来源
-            "purchase_link": item['link']
-        }
-    else:
-        return {
-            "found": False,
-            "message": "Standard part not found in knowledge base."
-        }
+        return {"found": False, "message": f"No standard part for {most_common_dia}mm holes."}
