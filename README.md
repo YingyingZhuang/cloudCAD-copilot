@@ -26,6 +26,13 @@ This engineering judgment assistant goes beyond simple commands. It understands:
 
 ## Progress Log
 
+### Phase 4: Full-Stack Integration & UI Guidance 
+**Objective:** Upgrade from a data script to a user-facing application with "Hand-holding" guidance.
+- **React Frontend:** Migrated to a modern web architecture using Vite + React.
+- **Context-Aware Reasoning Engine:** The backend now performs real-time counting of features (e.g., "Detected 6x holes") and simulates stack-up analysis (Plate Thickness + Backing + Thread Depth) to calculate the precise Grip Length (e.g., 65mm).
+- **Virtual Onshape Panel:** Developed a UI that mimics the Onshape "Standard Content" dialog. It highlights AI-calculated fields (like Length) to validate the engineer's choice.
+- **Navigation Guidance:** Added step-by-step instructions (e.g., "Assembly Tab > Insert > Standard Content") to guide users to the correct tool location.
+- 
 ### Phase 3: Intelligent Context Awareness 
 - **Onshape API Integration:** Implemented a secure Python client (`backend/onshape_client.py`) with HMAC-SHA256 authentication to interact with the Onshape REST API.
 - **Custom FeatureScript Protocol:** Designed a string-based protocol (`"PartName:::Diameter"`) to reliably extract geometry data, bypassing complex JSON nesting issues.
@@ -64,43 +71,63 @@ This engineering judgment assistant goes beyond simple commands. It understands:
 
 ---
 
-## Tech Stack
-- **Core:** Onshape FeatureScript (Custom Features)
-- **Backend:** Python / FastAPI (In Progress)
-- **API:** Onshape REST API
-- **Tools:** Postman
+---
 
-| Component  | Description |
-| :--- | :--- | 
+## Tech Stack
+- **Frontend:** React, Vite, CSS3
+- **Backend:** Python, FastAPI
+- **Core Intelligence:** Onshape FeatureScript (Custom Features)
+- **API:** Onshape REST API
+- **NLP:** (Planned) LLM for Intent Extraction
+
+| Component | Description |
+| :--- | :--- |
 | Core Intelligence | Geometric clustering + Engineering rules, which analyzes spatial data. |
-| NLP Parser| GPT-4 for extracting user intent from natural language commands. |
-| Onshape Integration  | Hybrid approach: Using mock data for logic validation, transitioning to real API. |
-| Streamlit UI | Interactive dashboard to visualize hole clusters and AI recommendations. |
+| Backend Logic | FastAPI server handling semantic filtering and context reasoning. |
+| Frontend UI | React application providing a "Virtual Panel" and navigation steps. |
+| Onshape Integration | Hybrid approach: Using FeatureScript for geometry extraction and REST API for data retrieval. |
 
 ---
+
 ## Project Structure
 
 ```text
 CAD-Copilot/
-├── core/                   # Core Intelligence Module
-│   ├── nlp_parser.py       # Natural language understanding (Intent Extraction)
-│   ├── geometry_analyzer.py# Geometric reasoning & Hole clustering (DBSCAN)
-│   └── standard_selector.py# Engineering reasoning & ISO logic
-├── data/                   # Data Sources
-│   ├── mock_assembly.json  # Mock data (e.g., Blanking die example)
-│   └── standards_db.json   # ISO specifications database
+├── backend/                # FastAPI Server (The Brain)
+│   ├── main.py             # Context reasoning & API endpoints
+│   ├── onshape_client.py   # Secure API wrapper (HMAC auth)
+│   └── config.py           # Environment variables
+├── frontend/               # React Application (The Face)
+│   ├── src/App.jsx         # UI Logic & Virtual Panel component
+│   └── src/App.css         # Styling
+├── featurescript/          # Onshape Custom Features
+│   └── detectHoles.fs      # Geometry extraction kernel
 ├── docs/                   # Documentation
-│   ├── DESIGN.md           # System architecture & Design philosophy
-│   └── LEARNING_LOG.md     # Daily progress tracker
-└── demo/                   # Visualization
-    └── streamlit_app.py    # Interactive web interface
+│   └── README.md           # Project documentation
+└── .env                    # Security keys (Excluded from Git)
 ```
 ---
-## How to Run (PoC)
-```bash
-# 1. Install dependencies
-pip install streamlit scikit-learn plotly openai
+##  How to Run
 
-# 2. Launch the application
-streamlit run demo/streamlit_app.py
+### Prerequisites
+* Node.js & npm
+* Python 3.x
+
+### Step 1: Start the Backend
+```bash
+cd backend
+# Activate virtual environment
+source venv/bin/activate
+# Run the server
+python3 -m uvicorn main:app --reload
 ```
+Server runs on: http://localhost:8000
+### Step 2:Start the Frontend 
+```bash
+cd frontend
+# Install dependencies (First time only)
+npm install
+# Run the Vite dev server
+npm run dev
+```
+App runs on: http://localhost:5173
