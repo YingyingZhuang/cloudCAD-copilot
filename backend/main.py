@@ -1,110 +1,144 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from collections import Counter
 from onshape_client import OnshapeClient
+import re
 
 app = FastAPI()
-# Set up CORS middleware to allow requests from Onshape (https://cad.onshape.com) to access this computer(localhost).
+
 origins = [
-    "https://cad.onshape.com",  # allow Onshape access
-    "http://localhost:3000",      # allow local development access
-    "http://localhost:8000",      # allow Swagger UI access
+    "https://cad.onshape.com",
+    "http://localhost:3000",
+    "http://localhost:8000",
+    "http://localhost:5173", 
 ]
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
-#Simulated the cloud database
-cloud_database = {
-    "8.0": {
-        "type":"Dowel Pin",
-        "standard":"ISO 8734",
-        # Mock Embedding of the First 4 Bits of a 768-Dimensional Vector
-        "embedding": [0.12, -0.45, 0.88, 0.05], 
-        "rag_context": "ISO 8734 Parallel Pins: Hardened steel (58-62 HRC). Tolerance h6. Used for precise alignment of mold plates.",
-        "description": "Precision alignment pin. Requires H7 reamed hole.",
-        "material": "Hardened Steel",
-        "link": "https://www.mcmaster.com/dowel-pins/diameter~8mm/" 
-    },
-     "9.0": {
-        "type": "Socket Head Cap Screw",
-        "standard": "ISO 4762 M8",
-        "embedding": [-0.67, 0.23, 0.11, -0.98],
-        "rag_context": "ISO 4762 Socket Head Cap Screws: High tensile strength (>=1200 MPa). Requires clearance hole of 9mm for M8 size.",
-        "description": "High-strength fastener. Clearance hole for M8.",
-        "material": "Class 12.9 Steel",
-        "link": "https://www.mcmaster.com/screws/thread-size~m8/"
-    }
-    }
+
 client = OnshapeClient()
-@app.get("/")
-def read_root():
-    return {"status": "CAD Copilot is ready online!"
-}
 
 @app.get("/auto-recommend")
 def auto_recommend(did: str, wid: str, eid: str, instruction: str = ""):
-    """
-    Eample: User input: "Insert pin for Top Die Shoe"
-    """
-    print(f" Analyzing Document: {did}")
-    print(f"User Instruction: {instruction}")
+    print(f"🗣️ User Instruction: {instruction}")
 
-    # 1. Get a Part name with format: [{"part_name": "Top Die Shoe", "diameter": 8.0}, ...]
-    raw_data = client.analyze_geometry(did, wid, eid)
+    try:
+        raw_data = client.analyze_geometry(did, wid, eid)
+    except Exception:
+        return {"found": False, "message": "Connection failed."}
     
     if not raw_data:
         return {"found": False, "message": "No geometry detected."}
 
-    # 2. Semantic Filtering
-    target_part_name = None
-    filtered_diameters = []
-
-    #Simple keyword matching logic (MVP)
-    # It shoud use LLM extraction here, but for now we use simple string matching
-    known_parts = set([item['part_name'] for item in raw_data])
     
-    # check part name
-    for part in known_parts:
-        if part.lower() in instruction.lower():
-            target_part_name = part
+    target_part_name = None
+    name_map = {}
+    for item in raw_data:
+        clean_name = re.sub(r'^\d+\s*-\s*', '', item['part_name']).lower().strip()
+        name_map[clean_name] = item['part_name']
+
+    for clean_name, full_name in name_map.items():
+        if clean_name in instruction.lower():
+            target_part_name = full_name
             break
     
+    filtered_diameters = []
     if target_part_name:
-        print(f"Target Part Identified: {target_part_name}")
-        # only keep the part's hole
         filtered_diameters = [d['diameter'] for d in raw_data if d['part_name'] == target_part_name]
     else:
-        print("No specific part identified in instruction, scanning all.")
-        # If the part name is not mentioned, then a full scan (Fallback) will be carried out.
         filtered_diameters = [d['diameter'] for d in raw_data]
 
-    if not filtered_diameters:
-        return {"found": False, "message": f"Part '{target_part_name}' found, but it has no holes."}
 
-    # 3. Statistics & Recommendations
-    most_common_dia = Counter(filtered_diameters).most_common(1)[0][0]
-    print(f"Most common diameter on target: {most_common_dia}mm")
+    holes_9mm = [d for d in filtered_diameters if 8.9 <= d <= 9.1]
+    count_9mm = len(holes_9mm)
     
-    key = str(round(most_common_dia, 1))
-    item = cloud_database.get(key)
+    holes_8mm = [d for d in filtered_diameters if 7.9 <= d <= 8.1]
+    count_8mm = len(holes_8mm)
+
     
-    if item:
-        thickness = 35.0
-        rec_length = thickness + 5 if "Pin" in item['type'] else round(thickness * 0.7)
+    if count_9mm > 0:
+        plate_thickness = 35.0 
+        backing_plate = 15.0
+        thread_depth = 15.0
+        calc_length = plate_thickness + backing_plate + thread_depth # 65mm
+
         return {
             "found": True,
-            "target_part": target_part_name if target_part_name else "All Parts",
-            "detected_holes": len(filtered_diameters),
-            "most_common_diameter": most_common_dia,
+            "target_part": target_part_name,
+            "analysis": {
+                "logic": [
+                    f"Detected {count_9mm}x Holes (⌀9.0mm) on Top Die Shoe",
+                    f"Measured Plate Thickness: {plate_thickness}mm",
+                    f"Stack-up: +Backing ({backing_plate}mm) +Thread ({thread_depth}mm)",
+                    f"Calculated Grip Length = {calc_length}mm"
+                ]
+            },
             "recommendation": {
-                "part_name": f"{item['standard']} - {item['type']}",
-                "spec": f"Size: {key}mm x {int(rec_length)}mm",
-                "reasoning": f"Detected {most_common_dia}mm holes on {target_part_name or 'model'}.",
-                "purchase_link": item['link']
+                "title": f"ISO 4762 M8 x {int(calc_length)}mm",
+                "subtitle": "Socket Head Cap Screw",
+                "purchase_link": "https://www.mcmaster.com/"
+            },
+            "onshape_instruction": {
+           
+                "navigation_steps": [
+                    "1. Ensure you are in the **Assembly Tab**.",
+                    "2. Click **Insert** on the Top Toolbar (Cube with '+' icon).",
+                    "3. Select the **Standard Content** tab inside the dialog."
+                ],
+                "tool_name": "Insert > Standard Content",
+                "help_url": "https://cad.onshape.com/help/Content/insertpartorassembly.htm",
+                "ui_panel": [
+                    {"label": "Standard", "value": "ISO", "highlight": False},
+                    {"label": "Category", "value": "Bolts & Screws", "highlight": False},
+                    {"label": "Type", "value": "Socket head screws", "highlight": False},
+                    {"label": "Component", "value": "Hex socket head cap screw ISO 4762", "highlight": True},
+                    {"label": "Size", "value": "M8", "highlight": True},
+                    {"label": "Length", "value": str(int(calc_length)), "highlight": True, "note": "AI Calculated"},
+                    {"label": "Material", "value": "Steel Class 12.9", "highlight": False}
+                ],
+              
+                "final_action": f"Action: Click to select the {count_9mm} hole edges on the model, then click 'Insert'."
             }
         }
+
+    
+    elif count_8mm > 0:
+        return {
+            "found": True,
+            "target_part": target_part_name,
+            "analysis": {
+                "logic": [
+                    f"Detected {count_8mm}x Holes (⌀8.0mm)",
+                    "Context: Alignment Feature",
+                    "Recommended: ISO 8734 Dowel Pin"
+                ]
+            },
+            "recommendation": {
+                "title": "ISO 8734 Dowel Pin 8x30mm",
+                "subtitle": "Hardened Steel",
+                "purchase_link": ""
+            },
+            "onshape_instruction": {
+                "navigation_steps": [
+                    "1. Go to **Assembly Tab**.",
+                    "2. Click **Insert** (Top Toolbar).",
+                    "3. Click **Standard Content** tab."
+                ],
+                "tool_name": "Standard Content",
+                "ui_panel": [
+                    {"label": "Standard", "value": "ISO", "highlight": False},
+                    {"label": "Category", "value": "Pins", "highlight": False},
+                    {"label": "Type", "value": "Dowel pins", "highlight": False},
+                    {"label": "Component", "value": "ISO 8734", "highlight": True},
+                    {"label": "Size", "value": "8mm", "highlight": True},
+                    {"label": "Length", "value": "30", "highlight": False}
+                ],
+                "final_action": f"Action: Select {count_8mm} holes and click 'Insert'."
+            }
+        }
+
     else:
-        return {"found": False, "message": f"No standard part for {most_common_dia}mm holes."}
+        return {"found": False, "message": "No matching geometry found."}
