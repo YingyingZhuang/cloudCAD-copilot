@@ -23,8 +23,15 @@ This engineering judgment assistant goes beyond simple commands. It understands:
 - Engineering Calculation: Automatically calculating optimal pin/bolt length based on plate thickness.
   
 ---
-
 ## Progress Log
+### Phase 5: Generative AI Integration
+**Objective:** Replace hard-coded logic with an LLM for intent understanding and dynamic reasoning.
+* **OpenAI API:** Integrated GPT-3.5-turbo to process natural language instructions.
+* **Prompt Engineering:** Designed a "Chain-of-Thought" prompt that forces the AI to output valid JSON and perform stack-up calculations (e.g., 35mm + 15mm + 15mm = 65mm).
+* **Semantic Filtering:** Implemented a Python-side pre-processor to filter geometric data based on user keywords (e.g., "Top" filters for "Top Die Shoe"), solving the "Hallucination" problem of LLMs counting irrelevant holes.
+* **Hybrid Architecture:** Established a "Python Eyes + AI Brain" workflow where Python handles precise measurement (Facts) and AI handles intent reasoning (Logic).
+
+![Semantic Filtering Success](./demo_semantic_filtering.png)
 
 ### Phase 4: Full-Stack Integration & UI Guidance 
 **Objective:** Upgrade from a data script to a user-facing application with "Hand-holding" guidance.
