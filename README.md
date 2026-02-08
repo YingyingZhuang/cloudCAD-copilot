@@ -31,7 +31,7 @@ This engineering judgment assistant goes beyond simple commands. It understands:
 * **Semantic Filtering:** Implemented a Python-side pre-processor to filter geometric data based on user keywords (e.g., "Top" filters for "Top Die Shoe"), solving the "Hallucination" problem of LLMs counting irrelevant holes.
 * **Hybrid Architecture:** Established a "Python Eyes + AI Brain" workflow where Python handles precise measurement (Facts) and AI handles intent reasoning (Logic).
 
-![Semantic Filtering Success](./demo_semantic_filtering.png)
+![Semantic Filtering Success](assets/demo_semantic_filtering.png)
 
 ### Phase 4: Full-Stack Integration & UI Guidance 
 **Objective:** Upgrade from a data script to a user-facing application with "Hand-holding" guidance.
