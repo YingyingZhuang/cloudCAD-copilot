@@ -5,8 +5,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 from openai import OpenAI
 from onshape_client import OnshapeClient
+from pydantic import BaseModel
 import re
-
 
 load_dotenv()
 client_ai = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
@@ -28,12 +28,14 @@ def auto_recommend(did: str, wid: str, eid: str, instruction: str = ""):
 
     try:
         raw_data = client_cad.analyze_geometry(did, wid, eid)
+        print(f"Debug Raw Data: {raw_data}") 
     except Exception as e:
         print(f"Onshape API Error: {e}")
-        return {"found": False, "message": "Connection failed."}
+        return {"found": False, "message": f"Connection failed: {str(e)}"}
     
     if not raw_data:
-        return {"found": False, "message": "No geometry detected."}
+        print("Raw data is empty!") 
+        return {"found": False, "message": "No geometry detected (Empty Data)."}
 
     
     target_data = []      
@@ -155,3 +157,22 @@ def auto_recommend(did: str, wid: str, eid: str, instruction: str = ""):
     except Exception as e:
         print(f"AI Error: {e}")
         return {"found": False, "message": "AI Output Parsing Failed."}
+    
+class InsertRequest(BaseModel):
+    did: str
+    wid: str
+    eid: str
+    part_spec: str = "M8" # Reserved field, not in use at present
+
+@app.post("/insert-part")
+def execute_insert(req: InsertRequest):
+    print(f"Executing Insert Action for: {req.part_spec}")
+    
+    # Call the write method of the Client
+    result = client_cad.insert_part(req.did, req.wid, req.eid)
+    
+    if result["success"]:
+        return {"status": "success", "msg": "Successfully inserted ISO 4762 M8x65!"}
+    else:
+        # If it fails, return an error code of 500.
+        return {"status": "error", "msg": result["message"]}

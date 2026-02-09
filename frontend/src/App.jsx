@@ -5,11 +5,13 @@ function App() {
   const [instruction, setInstruction] = useState("")
   const [response, setResponse] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [inserting, setInserting] = useState(false) 
 
   // IDs
   const DID = "f50e28300b77e78d0c047b45"
   const WID = "7bc9dfac7226c7a02984cc3a"
-  const EID = "8b2be211d08ae2a28cf4a353"
+  const PART_STUDIO_EID ="8b2be211d08ae2a28cf4a353"
+  const ASSEMBLY_EID    = "c2048ce402c48fc44e04369a"
 
   const handleSend = async () => {
     if (!instruction) return;
@@ -17,7 +19,7 @@ function App() {
     setResponse(null);
 
     try {
-      const url = `http://localhost:8000/auto-recommend?did=${DID}&wid=${WID}&eid=${EID}&instruction=${encodeURIComponent(instruction)}`;
+      const url = `http://localhost:8000/auto-recommend?did=${DID}&wid=${WID}&eid=${PART_STUDIO_EID}&instruction=${encodeURIComponent(instruction)}`;
       const res = await fetch(url);
       const data = await res.json();
       setResponse(data);
@@ -25,6 +27,33 @@ function App() {
       setResponse({ found: false, message: "Backend error." });
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleInsert = async () => {
+    setInserting(true);
+    try {
+      // When we insert parts, we use ASSEMBLY_EID
+      const res = await fetch("http://localhost:8000/insert-part", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          did: DID,
+          wid: WID,
+          eid: ASSEMBLY_EID,
+          part_spec: "M8"
+        })
+      });
+      const data = await res.json();
+      if (data.status === "success") {
+        alert(data.msg + "\n\n(Go check your Onshape tab!)");
+      } else {
+        alert("Insert Failed: " + data.msg);
+      }
+    } catch (e) {
+      alert("Network Error");
+    } finally {
+      setInserting(false);
     }
   };
 
@@ -41,7 +70,7 @@ function App() {
       {/* Header */}
       <div style={{marginBottom:'30px', borderBottom:'1px solid #333', paddingBottom:'20px'}}>
         <h1 style={{margin:0, fontSize:'28px', display:'flex', alignItems:'center', gap:'10px'}}>
-          <span></span> CAD Copilot <span style={{fontSize:'12px', background:'#1d5bba', padding:'2px 8px', borderRadius:'4px'}}>DEMO</span>
+          <span></span> CAD Copilot <span style={{fontSize:'12px', background:'#1d5bba', padding:'2px 8px', borderRadius:'4px'}}>PRO</span>
         </h1>
         <p style={{color:'#888', margin:'5px 0 0 0'}}>Context-Aware Assembly Assistant</p>
       </div>
@@ -72,6 +101,19 @@ function App() {
       </div>
 
       {/* Main Result Area */}
+      {response && !response.found && (
+        <div style={{
+          backgroundColor: '#ffebee', 
+          color: '#c62828', 
+          padding: '15px', 
+          borderRadius: '8px', 
+          border: '1px solid #ef9a9a',
+          marginTop: '20px'
+        }}>
+          <strong>Error:</strong> {response.message}
+        </div>
+      )}
+
       {response && response.found && (
         <div style={{ display:'grid', gridTemplateColumns: '1fr 1.4fr', gap:'25px', animation: 'fadeIn 0.5s ease' }}>
           
@@ -96,13 +138,9 @@ function App() {
           {/* Right Column: UI Simulation */}
           <div style={{backgroundColor:'#fff', borderRadius:'12px', overflow:'hidden', color:'#333', boxShadow:'0 10px 30px rgba(0,0,0,0.3)'}}>
             
-            {/* 1. Navigation Guide */}
             <div style={{backgroundColor:'#fff3cd', padding:'15px 20px', borderBottom:'1px solid #ffeeba'}}>
-              <div style={{fontSize:'12px', fontWeight:'bold', color:'#856404', marginBottom:'8px', textTransform:'uppercase', display:'flex', justifyContent:'space-between'}}>
+              <div style={{fontSize:'12px', fontWeight:'bold', color:'#856404', marginBottom:'8px', textTransform:'uppercase'}}>
                 <span>Navigation Guide</span>
-                {response.onshape_instruction.help_url && (
-                  <a href={response.onshape_instruction.help_url} target="_blank" style={{color:'#856404', textDecoration:'underline'}}>Help ?</a>
-                )}
               </div>
               <div style={{fontSize:'14px', color:'#856404', lineHeight:'1.5'}}>
                  {response.onshape_instruction.navigation_steps.map((step, idx) => (
@@ -111,7 +149,6 @@ function App() {
               </div>
             </div>
 
-            {/* 2. Tool Header */}
             <div style={{backgroundColor:'#f1f1f1', padding:'12px 20px', borderBottom:'1px solid #ddd', display:'flex', justifyContent:'space-between', alignItems:'center'}}>
               <span style={{fontWeight:'bold', fontSize:'15px', color:'#333'}}>
                 {response.onshape_instruction.tool_name}
@@ -119,7 +156,6 @@ function App() {
               <span style={{fontSize:'18px'}}></span>
             </div>
 
-            {/* 3. Virtual Panel */}
             <div style={{padding:'20px 25px'}}>
               {response.onshape_instruction.ui_panel.map((field, idx) => (
                 <div key={idx} style={{marginBottom:'12px', display:'flex', alignItems:'center'}}>
@@ -138,7 +174,6 @@ function App() {
                     }}>
                       {field.value}
                     </div>
-                    {/* AI Note */}
                     {field.note && (
                       <div style={{
                         position:'absolute', right:'-8px', top:'-22px', 
@@ -152,17 +187,20 @@ function App() {
                 </div>
               ))}
               
-              {/* 4. Final Action (New!) */}
               <div style={{marginTop:'25px', paddingTop:'15px', borderTop:'1px dashed #ddd', textAlign:'center'}}>
                 <div style={{fontSize:'14px', fontWeight:'bold', color:'#d32f2f', marginBottom:'10px'}}>
                   {response.onshape_instruction.final_action}
                 </div>
-                <button style={{
-                  backgroundColor:'#1d5bba', color:'white', border:'none', 
-                  padding:'10px 40px', borderRadius:'6px', fontWeight:'bold', cursor:'default',
-                  boxShadow:'0 4px 6px rgba(29, 91, 186, 0.3)'
-                }}>
-                  Insert
+                <button 
+                  onClick={handleInsert} 
+                  disabled={inserting}
+                  style={{
+                    backgroundColor: inserting ? '#ccc' : '#1d5bba', 
+                    color: 'white', border: 'none', 
+                    padding: '10px 40px', borderRadius:'6px', fontWeight:'bold', cursor: inserting ? 'wait' : 'pointer',
+                    boxShadow:'0 4px 6px rgba(29, 91, 186, 0.3)'
+                  }}>
+                  {inserting ? "Inserting..." : "Insert"}
                 </button>
               </div>
             </div>
