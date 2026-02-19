@@ -6,7 +6,7 @@
 ## Overview
 CloudCAD-Copilot is a "proof-of-concept" agent designed to bridge the gap between natural language commands and CAD geometric constraints. It leverages **LLMs for intent extraction** and **geometric clustering algorithms** to intelligently identify, select, and insert standard parts (e.g., ISO Screws) into the correct locations within an Onshape assembly.
 
-> **Status:** Active Development (Day 2 Complete)
+> **Status:** Prototype Complete
 > **Goal:** Eliminate manual lookups for ISO/ASME standard parts in mold design.
 
 ## Project Aims
@@ -17,13 +17,30 @@ CloudCAD-Copilot is a "proof-of-concept" agent designed to bridge the gap betwee
 
 ## Core Capabilities
 This engineering judgment assistant goes beyond simple commands. It understands:
-- Contextual Targeting: How to target the right part in the assembly area.
-- Feature Recognition: Distinguishing φ8mm dowel pin holes from φ9mm screw clearance holes.
-- Standard Recommendation: Knowing when to recommend standards and which ISO standard applies to the specific geometry.
-- Engineering Calculation: Automatically calculating optimal pin/bolt length based on plate thickness.
+- Natural Language Input: Accepts instructions like insert screw for top die shoe and identifies the target part automatically.
+- Contextual Targeting: Filters geometry by part name so only holes on the specified component are analysed.
+- Feature Recognition: Distinguishes ø8mm dowel pin holes from ø9mm screw clearance holes using diameter thresholds.
+- Standard Recommendation: Maps detected geometry to the correct ISO standard (It sets the rules: ISO 8734 for pins, ISO 4762 for screws).
+- Engineering Calculation: Automatically calculates optimal fastener length based on plate thickness (e.g., Pin Length = Plate Thickness + 5mm).
+- Batch Insert: Clones a seed fastener already in the assembly and inserts copies into all detected hole positions.
   
 ---
+## Demo
+![Semantic Filtering Success](assets/demo_ui.png)
+This is the CAD Copilot UI Panel, when you input the promote: insert screw for top die shoe, the AI detects 6 M8 screw holes and 4 dowel pin holes on the Top Die Shoe, recommends ISO 4762 M8 x 65mm, and triggers batch insert.
+Then click "Insert" button, it will insert screws assembly.
+![Semantic Filtering Success](assets/demo_assembly.png)
+
 ## Progress Log
+### Phase 6: Batch Insert & Full Pipeline Closure
+**Objective:** Close the loop from geometry detection to actual CAD modification.
+* **Batch Insert Engine:**  scans the assembly for an existing M8 screw as a seed template, then clones and inserts it for each detected hole.
+* **Assembly Scan:** The client queries GET /api/assemblies/.../ and searches rootAssembly.instances to locate the template part by name keywords (Hex, M8, ISO 4762).
+* **Two-Step Insert Strategy:** Inserts via POST /instances, then attempts positional placement via POST /occurrences/transform.
+* **Instruction Caching:** The backend caches the parsed part keyword and hole coordinates from auto-recommend so the subsequent insert-part call reuses them without re-scanning.
+* **Deduplication:** Python-side deduplication groups cylindrical faces by coordinate (1e-4 m precision) to avoid double-counting top and bottom faces of the same hole.
+
+
 ### Phase 5: Generative AI Integration
 **Objective:** Replace hard-coded logic with an LLM for intent understanding and dynamic reasoning.
 * **OpenAI API:** Integrated GPT-3.5-turbo to process natural language instructions.
@@ -85,8 +102,8 @@ This engineering judgment assistant goes beyond simple commands. It understands:
 - **Backend:** Python, FastAPI
 - **Core Intelligence:** Onshape FeatureScript (Custom Features)
 - **API:** Onshape REST API
-- **NLP:** (Planned) LLM for Intent Extraction
-
+- **NLP:** Keyword-based semantic filtering
+- 
 | Component | Description |
 | :--- | :--- |
 | Core Intelligence | Geometric clustering + Engineering rules, which analyzes spatial data. |
@@ -119,6 +136,7 @@ CAD-Copilot/
 ### Prerequisites
 * Node.js & npm
 * Python 3.x
+* An Onshape account with API keys
 
 ### Step 1: Start the Backend
 ```bash
@@ -138,3 +156,10 @@ npm install
 npm run dev
 ```
 App runs on: http://localhost:5173
+
+## Known Limitations
+
+- **Screw positioning:** Inserted screws currently appear at the assembly origin. Positional placement via POST /occurrences/transform is implemented but depends on Onshape returning a valid occurrence path, which the /instances endpoint does not currently provide in the response body.
+- **Part name matching:** Keyword-based. The PART_NAME_MAP in main.py maps natural language input to exact part names in the target Onshape document.
+- **Seed template required:** One M8 screw must be manually inserted into the assembly before running batch insert — the system clones this instance.
+- **Document-specific IDs:** PART_STUDIO_EID and ASSEMBLY_EID in main.py are hardcoded to the development document and must be updated for a different Onshape document.
