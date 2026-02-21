@@ -15,7 +15,7 @@ CloudCAD-Copilot is a "proof-of-concept" agent designed to bridge the gap betwee
 - Integration: Currently testing with real Onshape API (moving from mock data).
 - UI: Streamlit interface for visualization.
 
-## Core Capabilities
+## Core Capabilities(MVP)
 This engineering judgment assistant goes beyond simple commands. It understands:
 - Natural Language Input: Accepts instructions like insert screw for top die shoe and identifies the target part automatically.
 - Contextual Targeting: Filters geometry by part name so only holes on the specified component are analysed.
@@ -26,6 +26,10 @@ This engineering judgment assistant goes beyond simple commands. It understands:
   
 ---
 ## Demo
+![Demo Video](./assets/demo.gif)
+
+*(Watch the full HD video demonstration with technical explanation [Here on YouTube](https://youtu.be/XqpCQ5_nefo))*
+
 ![Semantic Filtering Success](assets/demo_ui.png)
 This is the CAD Copilot UI Panel, when you input the promote: insert screw for top die shoe, the AI detects 6 M8 screw holes and 4 dowel pin holes on the Top Die Shoe, recommends ISO 4762 M8 x 65mm, and triggers batch insert.
 Then click "Insert" button, it will insert screws assembly.
@@ -75,7 +79,7 @@ Then click "Insert" button, it will insert screws assembly.
 - **Classification Engine:** Automatically categorizes features into "Dowel Pins" (<8.5mm) vs. "Screw Clearance" (>8.5mm).
 - **Auto Calculating:** dynamic calculation of part lengths based on plate thickness (e.g., `Pin Length = Plate Thickness + 5mm`).
 
-![AI Logic Demo](assets/day2_featurescript_improvement.png)
+![Demo](assets/day2_featurescript_improvement.png)
 *Figure: FeatureScript performing real-time inference, recommending ISO 8734 pins and ISO 4762 screws based on hole dimensions.*
 
 📂 **Code:** [detectHoles.fs](featurescript/detectHoles.fs)
@@ -93,6 +97,9 @@ Then click "Insert" button, it will insert screws assembly.
 
 📂 **Data Sample:** [assembly_data.json](api_tests/assembly_data.json)
 
+## Future Roadmap
+* **Spatial Transformation Matrix:** Enhance the FeatureScript to reliably extract 3D centroid coordinates of cylindrical faces.
+* **Automated Mating:** Implement POST requests to the `/transforms` endpoint to automatically position and mate the batch-inserted fasteners directly into their respective target holes.
 ---
 
 ---
@@ -100,9 +107,8 @@ Then click "Insert" button, it will insert screws assembly.
 ## Tech Stack
 - **Frontend:** React, Vite, CSS3
 - **Backend:** Python, FastAPI
-- **Core Intelligence:** Onshape FeatureScript (Custom Features)
-- **API:** Onshape REST API
-- **NLP:** Keyword-based semantic filtering
+- **Core Intelligence:** Onshape REST API, FeatureScript
+- **AI Engine:** OpenAI API (GPT-4o)
 - 
 | Component | Description |
 | :--- | :--- |
@@ -141,12 +147,16 @@ CAD-Copilot/
 ### Step 1: Start the Backend
 ```bash
 cd backend
-# Activate virtual environment
+python3 -m venv venv
 source venv/bin/activate
-# Run the server
+pip install -r requirements.txt
+#Create a .env file in the backend directory and add your API keys:
+ONSHAPE_ACCESS_KEY=your_access_key
+ONSHAPE_SECRET_KEY=your_secret_key
+OPENAI_API_KEY=your_openai_key
+#Start the server:
 python3 -m uvicorn main:app --reload
 ```
-Server runs on: http://localhost:8000
 ### Step 2:Start the Frontend 
 ```bash
 cd frontend
@@ -156,7 +166,7 @@ npm install
 npm run dev
 ```
 App runs on: http://localhost:5173
-
+Type: "insert screw for top die" and click "Execute", then click "Insert" button.
 ## Known Limitations
 
 - **Screw positioning:** Inserted screws currently appear at the assembly origin. Positional placement via POST /occurrences/transform is implemented but depends on Onshape returning a valid occurrence path, which the /instances endpoint does not currently provide in the response body.
